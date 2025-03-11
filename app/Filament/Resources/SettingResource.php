@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Filament\Clusters\Settings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -17,11 +18,13 @@ class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationLabel = 'Pengaturan';
+    protected static ?string $cluster = Settings::class;
 
-    protected static ?string $pluralModelLabel = 'Pengaturan';
+    protected static ?string $navigationLabel = 'Data Instansi';
+
+    protected static ?string $pluralModelLabel = 'Data Instansi';
 
     public static function form(Form $form): Form
     {
