@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Filament\Resources\IncomingMailResource\Widgets;
+namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
-use App\Models\IncomingMail;
+use App\Models\OutcomingMail;
 use Carbon\Carbon;
 
-class IncomingMailWidget extends ChartWidget
+class OutcomingMailWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Suarat Masuk';
+    protected static ?string $heading = 'Suarat Keluar';
 
     protected static string $color = 'info';
 
 
     protected function getFilters(): ?array
     {
-        $years = IncomingMail::selectRaw('YEAR(date) as year')
+        $years = OutcomingMail::selectRaw('YEAR(date) as year')
             ->distinct()
             ->orderBy('year', 'desc')
             ->pluck('year', 'year')
@@ -36,7 +36,7 @@ class IncomingMailWidget extends ChartWidget
             $activeFilter = Carbon::now()->year;
         }
 
-        $monthlyCounts = IncomingMail::selectRaw('MONTH(date) as month, COUNT(*) as count')
+        $monthlyCounts = OutcomingMail::selectRaw('MONTH(date) as month, COUNT(*) as count')
             ->whereYear('date', $activeFilter)
             ->groupBy('month')
             ->orderBy('month')
@@ -51,7 +51,7 @@ class IncomingMailWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Jumlah Surat Masuk',
+                    'label' => 'Jumlah Surat Keluar',
                     'data' => array_values($data),
                 ],
             ],
@@ -66,6 +66,6 @@ class IncomingMailWidget extends ChartWidget
 
     public function getDescription(): ?string
     {
-        return 'Data ini diambil dari data surat masuk yang telah tercatat di sistem.';
+        return 'Data ini diambil dari data surat keluar yang telah tercatat di sistem.';
     }
 }

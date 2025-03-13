@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\IncomingMailResource\Pages;
-use App\Filament\Resources\IncomingMailResource\RelationManagers;
-use App\Models\IncomingMail;
+use App\Filament\Resources\OutcomingMailResource\Pages;
+use App\Filament\Resources\OutcomingMailResource\RelationManagers;
+use App\Models\OutcomingMail;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,15 +16,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Log;
 
-class IncomingMailResource extends Resource
+class OutcomingMailResource extends Resource
 {
-    protected static ?string $model = IncomingMail::class;
+    protected static ?string $model = OutcomingMail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-envelope-open';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-up-on-square-stack';
 
-    protected static ?string $navigationLabel = 'Surat Masuk';
+    protected static ?string $navigationLabel = 'Surat Keluar';
 
-    protected static ?string $pluralModelLabel = 'Surat Masuk';
+    protected static ?string $pluralModelLabel = 'Surat Keluar';
 
     public static function form(Form $form): Form
     {
@@ -49,7 +49,7 @@ class IncomingMailResource extends Resource
                     ->live()
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $set) {
-                        $existingMail = IncomingMail::where('reference_number', $state)->first();
+                        $existingMail = OutcomingMail::where('reference_number', $state)->first();
 
                         if ($existingMail) {
                             $set('reference_number', null);
@@ -93,7 +93,7 @@ class IncomingMailResource extends Resource
                 Tables\Columns\TextColumn::make('file')
                     ->label('File Surat')
                     ->formatStateUsing(fn ($state, $record) => $state
-                        ? '<a href="'.route('incoming-mails.preview', $record->id).'" style="color:red;" target="_blank">Lihat File</a>'
+                        ? '<a href="'.route('outcoming-mails.preview', $record->id).'" style="color:red;" target="_blank">Lihat File</a>'
                         : 'No File')
                     ->html(),
                 Tables\Columns\TextColumn::make('date')
@@ -144,7 +144,7 @@ class IncomingMailResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
@@ -163,9 +163,9 @@ class IncomingMailResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListIncomingMails::route('/'),
-            'create' => Pages\CreateIncomingMail::route('/create'),
-            'edit' => Pages\EditIncomingMail::route('/{record}/edit'),
+            'index' => Pages\ListOutcomingMails::route('/'),
+            'create' => Pages\CreateOutcomingMail::route('/create'),
+            'edit' => Pages\EditOutcomingMail::route('/{record}/edit'),
         ];
     }
 }

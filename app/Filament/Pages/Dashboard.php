@@ -14,11 +14,13 @@ class Dashboard extends BaseDashboard
 
     protected static ?string $slug = '/';
 
-    public function getHeaderWidgets(): array
-    {
-        return [
-            \app\Filament\Resources\IncomingMailResource\Widgets\TotalIncomingMailWidget::class,
-            \app\Filament\Resources\IncomingMailResource\Widgets\IncomingMailWidget::class,
-        ];
-    }
+    // public function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         \App\Filament\Widgets\TotalIncomingMailWidget::make(),
+    //         \App\Filament\Widgets\IncomingMailWidget::make(),
+    //         \App\Filament\Widgets\OutcomingMailWidget::make(),
+    //         \App\Filament\Widgets\IncomingMailTableDataWidget::make(),
+    //     ];
+    // }
 }

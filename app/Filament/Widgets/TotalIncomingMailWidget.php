@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\IncomingMailResource\Widgets;
+namespace App\Filament\Widgets;
 
 use App\Models\IncomingMail;
-use App\Models\Sender;
-use App\Models\Reciver;
+use App\Models\OutcomingMail;
 use App\Models\Setting;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Support\Enums\IconPosition;
@@ -17,8 +16,7 @@ class TotalIncomingMailWidget extends BaseWidget
     {
         $user = Auth::user();
         $totalIncomingMail = IncomingMail::count();
-        $totalSender = Sender::count();
-        $totalReciver = Reciver::count();
+        $totalOutcomingMail = OutcomingMail::count();
         $nameOrganization = Setting::find(1);
 
 
@@ -33,21 +31,13 @@ class TotalIncomingMailWidget extends BaseWidget
                     'class' => 'cursor-pointer',
                     'onclick' => "window.location.href='/admin/incoming-mails'",
                 ]),
-            Stat::make('Jumlah Pengirim', number_format($totalSender))
+            Stat::make('Jumlah Surat Keluar', number_format($totalOutcomingMail))
                 ->description('Lihat detail')
                 ->descriptionIcon('heroicon-m-arrow-right')
                 ->color('info')
                 ->extraAttributes([
                     'class' => 'cursor-pointer',
                     'onclick' => "window.location.href='/admin/master/senders'",
-                ]),
-            Stat::make('Jumlah Penerima', number_format($totalReciver))
-                ->description('Lihat detail')
-                ->descriptionIcon('heroicon-m-arrow-right')
-                ->color('info')
-                ->extraAttributes([
-                    'class' => 'cursor-pointer',
-                    'onclick' => "window.location.href='/admin/master/recivers'",
                 ]),
         ];
     }

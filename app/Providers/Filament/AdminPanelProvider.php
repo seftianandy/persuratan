@@ -36,8 +36,14 @@ class AdminPanelProvider extends PanelProvider
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->topNavigation()
             ->pages([])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([])
+            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->widgets([
+                \App\Filament\Widgets\TotalIncomingMailWidget::class,
+                \App\Filament\Widgets\OutcomingMailTableDataWidget::class,
+                \App\Filament\Widgets\OutcomingMailWidget::class,
+                \App\Filament\Widgets\IncomingMailTableDataWidget::class,
+                \App\Filament\Widgets\IncomingMailWidget::class,
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
