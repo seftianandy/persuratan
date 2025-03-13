@@ -22,18 +22,18 @@ E-Arsip menggunakan teknologi Laravel versi 11 dan Filament versi 3. Untuk mengi
 - Silahkan unduh atau clone aplikasi dari repositori ini.
 - Buat database dengan nama persuratan atau semacamnya.
 - Masuk ke direktori aplikasi menggunakan command prompt untuk Windows atau terminal untuk Linux dan Mac Os.
-- Untuk Windows jalankan perintah : copy .env.example .env
-- Untuk Linux dan Mac Os jalankan perintah : cp .env.example .env
-- Berikutnya jalankan perintah berikut : composer install
-- Setelah selesai, jalankan perintah berikutnya : php artisan key:generate
+- Untuk Windows jalankan perintah : ```copy .env.example .env```
+- Untuk Linux dan Mac Os jalankan perintah : ```cp .env.example .env```
+- Berikutnya jalankan perintah berikut : ```composer install```
+- Setelah selesai, jalankan perintah berikutnya : ```php artisan key:generate```
 - Pastikan kalian membuka file .env yang berhasil dibuat dari langkah diatas dan atur databasenya supaya terkoneksi dengan database kalian.
-- Setelah sudah dipastikan bisa terkoneksi dengan database kalian maka jalankan perintah berikut : php artisan migrate
+- Setelah sudah dipastikan bisa terkoneksi dengan database kalian maka jalankan perintah berikut : ```php artisan migrate```
 - Jika langkah - langkah diatas berjalan dengan lancar tanpa ada error, maka aplikasi berhasil diisntall dan sudah siap untuk digunakan.
-- Jalankan aplikasi dengan perintah berikut :  php artisan serve
+- Jalankan aplikasi dengan perintah berikut :  ```php artisan serve```
 - All done...!! Selamat menggunakan 🔥
 
 ## Regsitrasi admin
 
-Jalankan perintah berikut untuk registrasi pengguna Admin : php artisan make:filament-user
+Jalankan perintah berikut untuk registrasi pengguna Admin : ```php artisan make:filament-user```
 
 # persuratan
