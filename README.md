@@ -6,6 +6,8 @@ E-Arsip merupakan aplikasi yang dirancang untuk menyimpan atau mengarsipkan file
 - Fitur data pengirim yang digunakan untuk merekap pengirim surat atau dokumen.
 - Fitur pencatatan atau pengarsipan surat masuk atau dokumen yang masuk.
 - Fitur backup data 🚀
+- Fitur pencatatan atau pengarsipan surat keluar atau dokumen yang keluar 🚀.
+- Firut soft delete yang berguna untuk membantu anda jika terjadi hapus data yang tidak disengaja sehingga data bisa dikembalikan 🚀.
 
 ## Sistem yang dibutuhkan untuk penginstalan
 
