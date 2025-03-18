@@ -26,9 +26,11 @@ return new class extends Migration
             $table->string('reference_number')->unique();
             $table->longText('subject');
             $table->date('date');
+            $table->date('implementation_date');
             $table->longText('description');
             $table->mediumText('file')
                 ->charset('binary'); // MEDIUMBLOB
+            $table->string('file_type');
             $table->timestamps();
             $table->softDeletes();
         });

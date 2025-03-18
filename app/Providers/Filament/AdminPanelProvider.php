@@ -29,8 +29,9 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->spa()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#187FBA',
             ])
+            ->brandName('MEGABOY - Arsip')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
@@ -40,10 +41,11 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 \App\Filament\Widgets\TotalIncomingMailWidget::class,
                 \App\Filament\Widgets\OutcomingMailTableDataWidget::class,
-                \App\Filament\Widgets\OutcomingMailWidget::class,
                 \App\Filament\Widgets\IncomingMailTableDataWidget::class,
+                \App\Filament\Widgets\OutcomingMailWidget::class,
                 \App\Filament\Widgets\IncomingMailWidget::class,
             ])
+            // ->viteTheme('resources/css/filament.css')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

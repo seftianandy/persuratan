@@ -24,6 +24,8 @@ class SenderResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pengirim Surat';
 
+    protected static ?string $label = 'Pengirim Surat';
+
     protected static ?string $cluster = Master::class;
 
     protected static ?int $navigationSort = 1;

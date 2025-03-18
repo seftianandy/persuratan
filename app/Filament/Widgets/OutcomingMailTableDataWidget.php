@@ -6,10 +6,12 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use App\Models\OutcomingMail;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\TextColumn;
 
 class OutcomingMailTableDataWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Daftar Surat Keluar Terbaru';
+    protected static ?string $heading = 'Surat Keluar Terbaru';
 
     public function table(Table $table): Table
     {
@@ -30,6 +32,7 @@ class OutcomingMailTableDataWidget extends BaseWidget
                     ->sortable(),
                 Tables\Columns\TextColumn::make('reference_number')
                     ->label('No. Surat')
+                    ->weight(FontWeight::Bold)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('reciver.name')
                     ->label('Penerima')
@@ -54,6 +57,7 @@ class OutcomingMailTableDataWidget extends BaseWidget
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }

@@ -26,6 +26,8 @@ class SettingResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Instansi';
 
+    protected static ?string $label = 'Data Instansi';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -20,8 +20,10 @@ class IncomingMail extends Model
         'reference_number',
         'subject',
         'date',
+        'implementation_date',
         'description',
         'file',
+        'file_type',
     ];
 
     protected $dates = ['deleted_at'];

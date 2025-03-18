@@ -26,63 +26,96 @@ class IncomingMailResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Surat Masuk';
 
+    protected static ?string $label = 'Surat Masuk';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('sender_id')
-                    ->label('Pengirim Surat')
-                    ->relationship('sender', 'name') // Nama fungsi relasi di model IncomingMail
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-                Forms\Components\Select::make('receiver_id')
-                    ->label('Penerima Surat')
-                    ->relationship('reciver', 'name') // Nama fungsi relasi di model IncomingMail
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-                Forms\Components\TextInput::make('reference_number')
-                    ->label('No. Surat')
-                    ->required()
-                    ->maxLength(255)
-                    ->live()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $existingMail = IncomingMail::where('reference_number', $state)->first();
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make('Data Surat')
+                            ->schema([
+                                Forms\Components\TextInput::make('reference_number')
+                                    ->label('No. Surat')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live()
+                                    ->reactive()
+                                    ->afterStateUpdated(function ($state, callable $set) {
+                                        $existingMail = IncomingMail::where('reference_number', $state)->first();
 
-                        if ($existingMail) {
-                            $set('reference_number', null);
-                            \Filament\Notifications\Notification::make()
-                                ->title('Nomor Surat Sudah Digunakan')
-                                ->body("Nomor surat ini sudah digunakan untuk dokumen lain. <br />
-                                        <b>Judul</b> : {$existingMail->subject} <br />
-                                        <b>Pengirim</b> : {$existingMail->sender->name} <br />
-                                        <b>Penerima</b> : {$existingMail->reciver->name} <br />
-                                        <b>Tgl. Surat Diterima</b> : {$existingMail->date}")
-                                ->warning()
-                                ->send();
-                        }
-                    }),
-                Forms\Components\DatePicker::make('date')
-                    ->label('Tgl. Surat Ditermia')
-                    ->required(),
-                Forms\Components\Textarea::make('subject')
-                    ->label('Judul Surat')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('description')
-                    ->label('Deskripsi Surat')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('file')
-                    ->label('Upload File Surat (PDF)')
-                    ->required()
-                    ->storeFiles(false) // Jangan simpan ke storage
-                    ->disk('local') // Gunakan disk 'local' sementara
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->maxSize(2024) // Maksimal 2MB
-                    ->getUploadedFileNameForStorageUsing(fn ($file) => $file->getClientOriginalName()) // Simpan dengan nama asli
+                                        if ($existingMail) {
+                                            $set('reference_number', null);
+                                            \Filament\Notifications\Notification::make()
+                                                ->title('Nomor Surat Sudah Digunakan')
+                                                ->body("Nomor surat ini sudah digunakan untuk dokumen lain. <br />
+                                                        <b>Perihal</b> : {$existingMail->subject} <br />
+                                                        <b>Pengirim</b> : {$existingMail->sender->name} <br />
+                                                        <b>Penerima</b> : {$existingMail->reciver->name} <br />
+                                                        <b>Tgl. Surat Diterima</b> : {$existingMail->date}")
+                                                ->warning()
+                                                ->send();
+                                        }
+                                    }),
+                                Forms\Components\DatePicker::make('date')
+                                    ->label('Tgl. Surat Ditermia')
+                                    ->default(now()->format('Y-m-d'))
+                                    ->required(),
+                                Forms\Components\DatePicker::make('implementation_date')
+                                    ->label('Tgl. Pelaksanaan')
+                                    ->required(),
+                                Forms\Components\Textarea::make('subject')
+                                    ->label('Perihal')
+                                    ->required()
+                                    ->columnSpanFull(),
+                                Forms\Components\Textarea::make('description')
+                                    ->label('Deskripsi Surat')
+                                    ->required()
+                                    ->columnSpanFull(),
+                                Forms\Components\FileUpload::make('file')
+                                    ->label('Upload File Surat (PDF atau File Gambar)')
+                                    ->required()
+                                    ->storeFiles(false) // Jangan simpan ke storage
+                                    ->disk('local') // Gunakan disk 'local' sementara
+                                    ->acceptedFileTypes([
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png',
+                                        'image/png'
+                                    ])
+                                    ->maxSize(5120) // Maksimal 5MB
+                                    ->getUploadedFileNameForStorageUsing(fn ($file) => $file->getClientOriginalName()) // Simpan dengan nama asli
+                                    ->afterStateUpdated(function ($state, callable $set) {
+                                        if ($state) {
+                                            $set('file_type', $state->getMimeType()); // Simpan ekstensi file
+                                        }
+                                    }),
+
+                                Forms\Components\TextInput::make('file_type')
+                                    ->label('Tipe File')
+                                    ->readOnly()
+                                    ->required(),
+                            ])
+                        ]),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make('Info Surat')
+                            ->schema([
+                                Forms\Components\Select::make('sender_id')
+                                    ->label('Pengirim Surat')
+                                    ->relationship('sender', 'name') // Nama fungsi relasi di model IncomingMail
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+                                Forms\Components\Select::make('receiver_id')
+                                    ->label('Penerima Surat')
+                                    ->relationship('reciver', 'name') // Nama fungsi relasi di model IncomingMail
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+                            ])
+                        ]),
             ]);
     }
 
@@ -100,6 +133,13 @@ class IncomingMailResource extends Resource
                     ->label('Tgl. Surat Diterima')
                     ->date()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('implementation_date')
+                    ->label('Tgl. Pelaksanaan')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('reference_number')
+                    ->label('No. Surat')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('sender.name')
                     ->label('Pengirim')
                     ->numeric()
@@ -108,11 +148,8 @@ class IncomingMailResource extends Resource
                     ->label('Penerima')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('reference_number')
-                    ->label('No. Surat')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('subject')
-                    ->label('Judul Surat')
+                    ->label('Perihal')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -131,7 +168,7 @@ class IncomingMailResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
@@ -142,9 +179,10 @@ class IncomingMailResource extends Resource
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
-    
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

@@ -24,6 +24,8 @@ class ReciverResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Penerima Surat';
 
+    protected static ?string $label = 'Penerima Surat';
+
     protected static ?string $cluster = Master::class;
 
     protected static ?int $navigationSort = 2;
