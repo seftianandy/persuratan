@@ -23,14 +23,6 @@ class TotalIncomingMailWidget extends BaseWidget
         return [
             Stat::make('Selamat Datang', $user->name ?? 'Admin')
                 ->description($nameOrganization->name ?? 'Organisasi'),
-            Stat::make('Jumlah Surat Masuk', number_format($totalIncomingMail))
-                ->description('Lihat detail')
-                ->descriptionIcon('heroicon-m-arrow-right')
-                ->color('info')
-                ->extraAttributes([
-                    'class' => 'cursor-pointer',
-                    'onclick' => "window.location.href='/admin/incoming-mails'",
-                ]),
             Stat::make('Jumlah Surat Keluar', number_format($totalOutcomingMail))
                 ->description('Lihat detail')
                 ->descriptionIcon('heroicon-m-arrow-right')
@@ -38,6 +30,14 @@ class TotalIncomingMailWidget extends BaseWidget
                 ->extraAttributes([
                     'class' => 'cursor-pointer',
                     'onclick' => "window.location.href='/admin/master/senders'",
+                ]),
+            Stat::make('Jumlah Surat Masuk', number_format($totalIncomingMail))
+                ->description('Lihat detail')
+                ->descriptionIcon('heroicon-m-arrow-right')
+                ->color('info')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'onclick' => "window.location.href='/admin/incoming-mails'",
                 ]),
         ];
     }

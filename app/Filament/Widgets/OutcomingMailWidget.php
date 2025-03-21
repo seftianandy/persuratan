@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class OutcomingMailWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Rekapitulasi Suarat Keluar';
+    protected static ?string $heading = 'Rekapitulasi Surat Keluar';
 
     protected static string $color = 'info';
 
