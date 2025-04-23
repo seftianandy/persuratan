@@ -4,7 +4,7 @@
     <div class="p-4 bg-white shadow rounded-lg dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
         <h2 class="text-lg font-bold mb-2">Update Aplikasi</h2>
         <p>Versi aplikasi terbaru atau perbaikan bug akan diperbaharui. Untuk melakukan update aplikasi silahkan konfirmasi terlebih dahulu kepada developer.</p>
-        <p>Tekan tombol di bawah untuk melakukan update aplikasi.</p>
+        <p>Tekan tombol di bawah untuk melakukan update aplikasi, dan setelah berhasil update silahkan untuk merefresh halaman.</p>
         <br>
         <x-filament::button wire:click="runUpdateApp" class="mt-4 font-normal">
             Update Aplikasi
