@@ -39,7 +39,7 @@ class UpdatePage extends Page
         //     ->success()
         //     ->send();
 
-        $output = shell_exec('cd /d "' . base_path() . '" && git status');
+        $output = shell_exec('git status 2>&1');
         dd($output);
     }
 }
