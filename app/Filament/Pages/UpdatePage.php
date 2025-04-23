@@ -20,23 +20,26 @@ class UpdatePage extends Page
 
     public function runUpdateApp()
     {
-        $command = 'cd ' . base_path() .
-            ' && git stash' .
-            ' && git clean -df' .
-            ' && git pull origin main' .
-            ' && composer update --no-interaction' .
-            ' && php artisan migrate --force' .
-            ' && php artisan optimize:clear' .
-            ' && php artisan config:cache' .
-            ' && php artisan route:cache' .
-            ' 2>&1';
+        // $command = 'cd ' . base_path() .
+        //     ' && git stash' .
+        //     ' && git clean -df' .
+        //     ' && git pull origin main' .
+        //     ' && composer update --no-interaction' .
+        //     ' && php artisan migrate --force' .
+        //     ' && php artisan optimize:clear' .
+        //     ' && php artisan config:cache' .
+        //     ' && php artisan route:cache' .
+        //     ' 2>&1';
 
-        $output = shell_exec($command);
+        // $output = shell_exec($command);
 
-        Notification::make()
-            ->title("Update Aplikasi Berhasil")
-            ->body(nl2br($output ?: 'Tidak ada output dari proses update.'))
-            ->success()
-            ->send();
+        // Notification::make()
+        //     ->title("Update Aplikasi Berhasil")
+        //     ->body(nl2br($output ?: 'Tidak ada output dari proses update.'))
+        //     ->success()
+        //     ->send();
+
+        $output = shell_exec('cd /d "' . base_path() . '" && git status');
+        dd($output);
     }
 }
