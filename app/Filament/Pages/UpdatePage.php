@@ -8,26 +8,37 @@ use App\Filament\Clusters\Settings;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Artisan;
 
-public function runUpdateApp()
+class UpdatePage extends Page
 {
-    $git = '"C:\\Program Files\\Git\cmd\\git.exe"';
-    $composer = '"C:\\ProgramData\\ComposerSetup\\bin\\composer.bat"';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-path';
 
-    $command = 'cd ' . base_path() . ' && '
-        . $git . ' stash && '
-        . $git . ' clean -df && '
-        . $git . ' pull origin main && '
-        . $composer . ' update && '
-        . 'php artisan migrate --force && '
-        . 'php artisan optimize:clear && '
-        . 'php artisan config:cache && '
-        . 'php artisan route:cache';
+    protected static ?string $cluster = Settings::class;
 
-    $output = shell_exec($command . ' 2>&1');
+    protected static ?string $navigationLabel = 'Update Aplikasi';
 
-    Notification::make()
-        ->title("Update Aplikasi Berhasil")
-        ->body(nl2br($output))
-        ->success()
-        ->send();
+    protected static string $view = 'filament.pages.update-pages';
+
+    public function runUpdateApp()
+    {
+        $git = '"C:\\Program Files\\Git\cmd\\git.exe"';
+        $composer = '"C:\\ProgramData\\ComposerSetup\\bin\\composer.bat"';
+
+        $command = 'cd ' . base_path() . ' && '
+            . $git . ' stash && '
+            . $git . ' clean -df && '
+            . $git . ' pull origin main && '
+            . $composer . ' update && '
+            . 'php artisan migrate --force && '
+            . 'php artisan optimize:clear && '
+            . 'php artisan config:cache && '
+            . 'php artisan route:cache';
+
+        $output = shell_exec($command . ' 2>&1');
+
+        Notification::make()
+            ->title("Update Aplikasi Berhasil")
+            ->body(nl2br($output))
+            ->success()
+            ->send();
+    }
 }
