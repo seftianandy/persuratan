@@ -22,6 +22,8 @@ class UpdatePage extends Page
     {
         $output = shell_exec('cd ' . base_path() . ' && git stash && git clean -df && git pull origin main && composer update 2>&1');
         Artisan::call('migrate');
+        Artisan::call('filament:optimize-clear'); // menghapus cache pada filament
+        Artisan::call('filament:optimize'); // membuat cache untuk production
 
         Notification::make()
                 ->title("Update Aplikasi Berhasil")
