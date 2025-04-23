@@ -15,6 +15,11 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Log;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Filament\Tables\Actions\Action;
+use Filament\Notifications\Notification;
+use Livewire\Component;
+
 
 class OutcomingMailResource extends Resource
 {
@@ -173,6 +178,41 @@ class OutcomingMailResource extends Resource
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
+                Tables\Actions\Action::make('generate_qrcode')
+                    ->label(fn ($record) => $record->qrcode ? 'Download QR' : 'Generate QR')
+                    ->icon(fn ($record) => $record->qrcode ? 'heroicon-o-arrow-down-tray' : 'heroicon-o-qr-code')
+                    ->color(fn ($record) => $record->qrcode ? 'success' : 'gray')
+                    ->action(function ($record, Action $action) {
+                        if (!$record->qrcode) {
+                            $url = route('outcoming-mails.public', $record->uuid);
+
+                            $qrImage = QrCode::format('png')
+                                        ->merge(public_path('logo.png'), 0.3, true) // 0.3 = 30% ukuran logo
+                                        ->size(300)
+                                        ->generate($url);
+                            $record->qrcode = $qrImage;
+                            $record->save();
+
+                            Notification::make()
+                                ->title('QR Code Berhasil Dibuat')
+                                ->body('QR Code berhasil dibuat dan bisa diunduh.')
+                                ->success()
+                                ->send();
+
+                            return;
+                        }
+
+                        return response()->streamDownload(function () use ($record) {
+                            echo $record->qrcode;
+                        }, 'qrcode-' . $record->uuid . '.png');
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Konfirmasi')
+                    ->modalDescription(fn ($record) => $record->qrcode 
+                        ? 'Klik "Download" untuk menyimpan QR Code.' 
+                        : 'QR Code akan dibuat dan mengarah ke file surat.')
+                    ->modalButton(fn ($record) => $record->qrcode ? 'Download QR' : 'Generate'),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

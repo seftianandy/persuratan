@@ -1,12 +1,12 @@
 <x-filament-panels::page>
 
 <div class="space-y-6">
-    <div class="p-4 bg-white shadow rounded-lg">
+    <div class="p-4 bg-white shadow rounded-lg dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
         <h2 class="text-lg font-bold mb-2">Backup Manual</h2>
-        <p style="font-size: .97rem;">Selalu backup data anda secara berkala untuk meminimalisir kehilangan data karena berbagai macam ancaman seperti virus dan human error.</p>
-        <p style="font-size: .97rem;">Tekan tombol di bawah untuk melakukan backup data secara manual.</p>
+        <p>Selalu backup data anda secara berkala untuk meminimalisir kehilangan data karena berbagai macam ancaman seperti virus dan human error.</p>
+        <p>Tekan tombol di bawah untuk melakukan backup data secara manual.</p>
         <br>
-        <x-filament::button wire:click="runBackup" class="mt-4">
+        <x-filament::button wire:click="runBackup" class="mt-4 font-normal">
             Jalankan Backup
         </x-filament::button>
 
@@ -17,12 +17,12 @@
         @endif
     </div>
 
-    <div class="p-6 bg-white shadow rounded-xl">
+    <div class="p-6 bg-white shadow rounded-xl dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
         <h2 class="text-lg font-bold text-gray-800 mb-4">Daftar Backup Data</h2>
 
         <div class="overflow-x-auto">
-            <table class="w-full overflow-x-auto bg-white border border-gray-200 rounded-xl">
-                <thead class="bg-gray-100">
+            <table class="w-full overflow-x-auto bg-white border border-gray-200 rounded-xl dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
+                <thead class="bg-gray-100 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
                     <tr>
                         <th class="border px-4 py-2">No</th>
                         <th class="border px-4 py-2">Backup File</th>

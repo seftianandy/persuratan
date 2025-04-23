@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\OutcomingMailController;
+use App\Http\Controllers\PublicOutcomingMailController;
 use App\Filament\Pages\BackupPage;
 use Illuminate\Support\Facades\Storage;
+use App\Models\OutcomingMail;
 
 Route::get('/', function () {
     return redirect()->route('filament.admin.auth.login');
@@ -29,3 +31,5 @@ Route::get('/backup/download/{file}', function ($file) {
     return response()->download($filePath);
 })->where('file', '.*')->name('admin.settings.backup-download');
 
+Route::get('/outcoming-mails/public/{uuid}', [PublicOutcomingMailController::class, 'previewByUuid'])
+    ->name('outcoming-mails.public');

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
+
 
 class OutcomingMail extends Model
 {
@@ -23,10 +25,14 @@ class OutcomingMail extends Model
         'implementation_date',
         'description',
         'file',
-        'file_type',
+        'file_type'
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected $hidden = [
+        'qrcode',
+    ];
 
     protected function file(): Attribute
     {
@@ -49,5 +55,12 @@ class OutcomingMail extends Model
     public function reciver(): BelongsTo
     {
         return $this->belongsTo(Reciver::class, 'reciver_id');
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($mail) {
+            $mail->uuid = Str::uuid();
+        });
     }
 }
