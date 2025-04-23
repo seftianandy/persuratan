@@ -29,7 +29,7 @@
                     - Fitur generate dan download QRCode Barcode untuk TTE pada surat keluar.
                 </li>
                 <li>
-                    - Menu update aplikasi untuk mengupdate sistem aplikasi secara manual.
+                    - Menu update aplikasi untuk melakukan update sistem aplikasi secara manual.
                 </li>
             </ul>
         </div>
