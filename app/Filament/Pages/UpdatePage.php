@@ -8,38 +8,26 @@ use App\Filament\Clusters\Settings;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Artisan;
 
-class UpdatePage extends Page
+public function runUpdateApp()
 {
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-path';
+    $git = '"C:\\Program Files\\Git\cmd\\git.exe"';
+    $composer = '"C:\\ProgramData\\ComposerSetup\\bin\\composer.bat"';
 
-    protected static ?string $cluster = Settings::class;
+    $command = 'cd ' . base_path() . ' && '
+        . $git . ' stash && '
+        . $git . ' clean -df && '
+        . $git . ' pull origin main && '
+        . $composer . ' update && '
+        . 'php artisan migrate --force && '
+        . 'php artisan optimize:clear && '
+        . 'php artisan config:cache && '
+        . 'php artisan route:cache';
 
-    protected static ?string $navigationLabel = 'Update Aplikasi';
+    $output = shell_exec($command . ' 2>&1');
 
-    protected static string $view = 'filament.pages.update-pages';
-
-    public function runUpdateApp()
-    {
-        // $command = 'cd ' . base_path() .
-        //     ' && git stash' .
-        //     ' && git clean -df' .
-        //     ' && git pull origin main' .
-        //     ' && composer update --no-interaction' .
-        //     ' && php artisan migrate --force' .
-        //     ' && php artisan optimize:clear' .
-        //     ' && php artisan config:cache' .
-        //     ' && php artisan route:cache' .
-        //     ' 2>&1';
-
-        // $output = shell_exec($command);
-
-        // Notification::make()
-        //     ->title("Update Aplikasi Berhasil")
-        //     ->body(nl2br($output ?: 'Tidak ada output dari proses update.'))
-        //     ->success()
-        //     ->send();
-
-        $output = shell_exec('git status 2>&1');
-        dd($output);
-    }
+    Notification::make()
+        ->title("Update Aplikasi Berhasil")
+        ->body(nl2br($output))
+        ->success()
+        ->send();
 }
