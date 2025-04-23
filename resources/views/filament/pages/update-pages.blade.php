@@ -6,7 +6,7 @@
         <p>Versi aplikasi terbaru atau perbaikan bug akan diperbaharui. Untuk melakukan update aplikasi silahkan konfirmasi terlebih dahulu kepada developer.</p>
         <p>Tekan tombol di bawah untuk melakukan update aplikasi.</p>
         <br>
-        <x-filament::button wire:click="runBackup" class="mt-4 font-normal">
+        <x-filament::button wire:click="runUpdateApp" class="mt-4 font-normal">
             Update Aplikasi
         </x-filament::button>
 
