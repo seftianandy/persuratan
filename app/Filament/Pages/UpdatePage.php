@@ -16,6 +16,8 @@ class UpdatePage extends Page
 
     protected static ?string $navigationLabel = 'Update Aplikasi';
 
+    protected ?string $heading = 'Update Aplikasi';
+
     protected static string $view = 'filament.pages.update-pages';
 
     public function runUpdateApp()

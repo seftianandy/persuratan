@@ -17,6 +17,8 @@ class BackupPage extends Page
 
     protected static ?string $navigationLabel = 'Backup Data';
 
+    protected ?string $heading = 'Backup Data';
+
     protected static string $view = 'filament.pages.backup-page';
 
 
