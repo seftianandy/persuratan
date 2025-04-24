@@ -39,11 +39,12 @@ E-Arsip menggunakan teknologi Laravel versi 11 dan Filament versi 3. Untuk mengi
 
 Jalankan perintah berikut untuk registrasi pengguna Admin : ```php artisan make:filament-user```
 
-### Langkah - Langkah Penginstalan Untuk Lingkungan Docker
+### Langkah - Langkah Penginstalan Untuk Lingkungan Docker Dengan Laravel Sail
 
 Hore... 🎉 !!!  
 Sekarang kalian bisa jalankan aplikasi ini pada lingkungan docker lo. Cara installnya sebagai berkut :
 
+- Pastikan bahwa OS kamu support menggunakan laravel sail.
 - Silahkan melakukan update dulu dari aplikasi lama menggunakan tombol update aplikasi pada halaman pengaturan.
 - Jika kalian pengguna baru silahkan jalankan dulu langkah penginstalan diatas sampai membuat file ```.env```. 
 - Update composernya dulu dengan : ```composer update```. 
