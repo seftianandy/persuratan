@@ -10,6 +10,7 @@ E-Arsip merupakan aplikasi yang dirancang untuk menyimpan atau mengarsipkan file
 - Firut soft delete yang berguna untuk membantu anda jika terjadi hapus data yang tidak disengaja sehingga data bisa dikembalikan 🚀.
 - Fitur generate QRCode untuk surat keluar yang akan dibubuhkan pada berkas surat keluar ber-TTE 🚀.
 - Fitur update aplikasi secara manual pada halaman pengaturan 🚀.
+- Aplikasi sekarang bisa berjalan ke dalam lingkungan docker 🚀.
 
 ## Sistem yang dibutuhkan untuk penginstalan
 
@@ -37,5 +38,32 @@ E-Arsip menggunakan teknologi Laravel versi 11 dan Filament versi 3. Untuk mengi
 ## Regsitrasi admin
 
 Jalankan perintah berikut untuk registrasi pengguna Admin : ```php artisan make:filament-user```
+
+### Langkah - Langkah Penginstalan Untuk Lingkungan Docker
+
+Hore... 🎉 !!!
+Sekarang kalian bisa jalankan aplikasi ini pada lingkungan docker lo. Cara installnya sebagai berkut :
+
+- Silahkan melakukan update dulu dari aplikasi lama menggunakan tombol update aplikasi pada halaman pengaturan.
+- Jika kalian pengguna baru silahkan jalankan dulu langkah penginstalan diatas sampai membuat file ```.env```. Selanjutnya jalankan perintah berikut pada terminal atau command prompt kalian :  ```php artisan sail:install --with=pgsql```
+- Selanjutnya jalankan dengan perintah berikut : ```./vendor/bin/sail up -d```
+- Mungkin proses diatas sedikit lama tergantung internet kalian.
+- Bila sudah selesai jalankan generate key dengan perintah berikut : ```./vendor/bin/sail artisan key:generate```
+- Dan migrate databasenye : ```./vendor/bin/sail artisan migrate```
+
+* Sedikit catatan :
+Lakukan port forwarding agar port yang berjalan tidak terjadi crash atau error saat dijalankan. Pada file .env lakukan konfigurasi seperti berikut :
+
+DB_CONNECTION=pgsql
+DB_HOST=pgsql
+FORWARD_DB_PORT=5433
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=sail
+DB_PASSWORD=password
+
+Dimana ```FORWARD_DB_PORT=5433``` digunakan untuk ekspos port database yang digunakan agar tidak crash dengan port database yang sudah berjalan pada komputer host.
+Tambahkan juga ini pada .env untuk ekspos port aplikasi.
+```APP_PORT=8080```
 
 # persuratan
