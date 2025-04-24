@@ -41,7 +41,7 @@ Jalankan perintah berikut untuk registrasi pengguna Admin : ```php artisan make:
 
 ### Langkah - Langkah Penginstalan Untuk Lingkungan Docker
 
-Hore... 🎉 !!!
+Hore... 🎉 !!!  
 Sekarang kalian bisa jalankan aplikasi ini pada lingkungan docker lo. Cara installnya sebagai berkut :
 
 - Silahkan melakukan update dulu dari aplikasi lama menggunakan tombol update aplikasi pada halaman pengaturan.
