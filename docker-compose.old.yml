@@ -1,0 +1,46 @@
+services:
+  persuratan-app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: persuratan-app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:8000"
+    depends_on:
+      - persuratan-db
+    networks:
+      - persuratan
+
+  persuratan-db:
+    image: postgres:15
+    container_name: persuratan-db
+    restart: always
+    environment:
+      POSTGRES_DB: persuratan
+      POSTGRES_USER: persuratan
+      POSTGRES_PASSWORD: persuratan
+    ports:
+      - "2025:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - persuratan
+
+  persuratan-npm:
+    image: node:lts-alpine
+    container_name: persuratan-npm
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    entrypoint: ["npm"]
+    networks:
+      - persuratan
+
+networks:
+  persuratan:
+
+volumes:
+  pgdata:
