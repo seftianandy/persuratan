@@ -12,15 +12,19 @@
         <x-filament::button wire:click="runUpdateApp" class="mt-4 font-normal">
             Update Aplikasi
         </x-filament::button>
-        <div class="mt-6 p-4 text-white text-sm font-mono rounded-lg overflow-auto max-h-64" style="background-color: black" wire:poll.500ms="$refresh">
+        <div class="mt-6 p-4 text-white text-sm font-mono rounded-lg overflow-auto max-h-64" style="background-color: rgb(50, 50, 50)" wire:poll.500ms="$refresh">
+            <div class="text-gray-300 font-bold mb-2">Log Update:</div>
             <pre>{{ $updateLog }}</pre>
         </div>
 
-        @if (session()->has('success'))
-            <div class="mt-4 text-green-600">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div wire:poll.500ms>
+            @foreach (Filament\Notifications\Notification::all() as $notification)
+                <div class="bg-blue-500 text-white p-4 rounded-lg">
+                    <strong>{{ $notification->title }}</strong>
+                    <p>{{ $notification->body }}</p>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <div class="p-6 bg-white shadow rounded-xl dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
