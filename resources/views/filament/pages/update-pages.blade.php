@@ -17,14 +17,11 @@
             <pre>{{ $updateLog }}</pre>
         </div>
 
-        <div wire:poll.500ms>
-            @foreach (Filament\Notifications\Notification::all() as $notification)
-                <div class="bg-blue-500 text-white p-4 rounded-lg">
-                    <strong>{{ $notification->title }}</strong>
-                    <p>{{ $notification->body }}</p>
-                </div>
-            @endforeach
-        </div>
+        @if (session()->has('success'))
+            <div class="mt-4 text-green-600">
+                {{ session('success') }}
+            </div>
+        @endif
     </div>
 
     <div class="p-6 bg-white shadow rounded-xl dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
