@@ -49,7 +49,7 @@ class UpdatePage extends Page
 
         // Tentukan perintah Git berdasarkan OS
         $command = $isWindows
-            ? 'cmd /c ' . $git . ' log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5'
+            ? 'cd ' . base_path() . ' && ' . $git . ' log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5'
             : $git . ' log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5';
 
         // Jalankan perintah untuk mendapatkan commit history
