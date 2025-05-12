@@ -101,7 +101,7 @@ class UpdatePage extends Page
             proc_close($process);
         }
 
-        $this->updateLog .= "\nCommit History:\n" . $this->getGitCommits() . "\n";
+        $this->updateLog .= "\Riwayat Update:\n" . $this->getGitCommits() . "\n";
 
         // Jalankan perintah artisan secara langsung
         Artisan::call('migrate');
