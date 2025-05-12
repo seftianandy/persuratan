@@ -44,6 +44,8 @@ class UpdatePage extends Page
     #[On('runUpdateApp')]
     public function runUpdateApp()
     {
+        $this->updateLog = ""; // Kosongkan log sebelum update dimulai
+
         // Deteksi OS
         $isWindows = $this->osName === 'Windows';
         $git = $isWindows ? '"C:\\Program Files\\Git\\cmd\\git.exe"' : 'git';
@@ -62,7 +64,7 @@ class UpdatePage extends Page
 
         if (is_resource($process)) {
             while (!feof($pipes[1])) {
-                $this->updateLog .= fgets($pipes[1]); // Menyimpan hasil output ke variabel
+                $this->updateLog .= fgets($pipes[1]) . "<br>"; // Menyimpan hasil output ke variabel
                 $this->dispatch('updateLogUpdated'); // Memicu event Livewire agar UI diperbarui secara real-time
                 usleep(500000); // Tunggu sebentar agar tampilan tidak terlalu cepat
             }
@@ -79,6 +81,9 @@ class UpdatePage extends Page
         Artisan::call('optimize:clear');
         Artisan::call('config:cache');
         Artisan::call('route:cache');
+
+        // Tambahkan output dari Artisan ke dalam log
+        $this->updateLog .= nl2br(Artisan::output());
 
         // Kirim notifikasi sukses
         Notification::make()
