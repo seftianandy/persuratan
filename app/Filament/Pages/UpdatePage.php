@@ -31,7 +31,9 @@ class UpdatePage extends Page
             . $git . ' pull origin main && '
             . $composer . ' update && '
             . 'php artisan migrate --force && '
+            . 'php artisan filament:optimize-clear && '
             . 'php artisan optimize:clear && '
+            . 'php artisan filament:optimize && '
             . 'php artisan config:cache && '
             . 'php artisan route:cache';
 
