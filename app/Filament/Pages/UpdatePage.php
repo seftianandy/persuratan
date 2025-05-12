@@ -18,7 +18,6 @@ class UpdatePage extends Page
 
     public string $osName;
     public string $updateLog = "";
-    public bool $isUpdating = false;
 
     /**
      * Deteksi OS saat halaman dibuka.
@@ -45,7 +44,6 @@ class UpdatePage extends Page
     #[On('runUpdateApp')]
     public function runUpdateApp()
     {
-        $this->isUpdating = true; // Set status update berjalan
         $this->updateLog = ""; // Kosongkan log sebelum update dimulai
 
         // Deteksi OS
@@ -66,9 +64,9 @@ class UpdatePage extends Page
 
         if (is_resource($process)) {
             while (!feof($pipes[1])) {
-                $this->updateLog .= fgets($pipes[1]) . "<br>";
-                $this->dispatch('updateLogUpdated');
-                usleep(500000);
+                $this->updateLog .= fgets($pipes[1]) . "<br>"; // Menyimpan hasil output ke variabel
+                $this->dispatch('updateLogUpdated'); // Memicu event Livewire agar UI diperbarui secara real-time
+                usleep(500000); // Tunggu sebentar agar tampilan tidak terlalu cepat
             }
 
             fclose($pipes[1]);
@@ -76,7 +74,7 @@ class UpdatePage extends Page
             proc_close($process);
         }
 
-        // Jalankan perintah artisan
+        // Jalankan perintah artisan secara langsung
         Artisan::call('migrate');
         Artisan::call('config:clear');
         Artisan::call('cache:clear');
@@ -84,11 +82,8 @@ class UpdatePage extends Page
         Artisan::call('config:cache');
         Artisan::call('route:cache');
 
-        // Tambahkan output dari Artisan ke log
+        // Tambahkan output dari Artisan ke dalam log
         $this->updateLog .= nl2br(Artisan::output());
-
-        // Set status update selesai
-        $this->isUpdating = false;
 
         // Kirim notifikasi sukses
         Notification::make()

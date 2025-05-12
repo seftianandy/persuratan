@@ -12,11 +12,9 @@
         <x-filament::button wire:click="runUpdateApp" class="mt-4 font-normal">
             Update Aplikasi
         </x-filament::button>
-        @if($isUpdating)
-            <div class="mt-6 p-4 bg-black text-white text-sm font-mono rounded-lg overflow-auto max-h-64" wire:poll.500ms="$refresh">
-                <pre>{{ $updateLog }}</pre>
-            </div>
-        @endif
+        <div class="mt-6 p-4 text-white text-sm font-mono rounded-lg overflow-auto max-h-64" style="background-color: black" wire:poll.500ms="$refresh">
+            <pre>{{ $updateLog }}</pre>
+        </div>
 
         @if (session()->has('success'))
             <div class="mt-4 text-green-600">
