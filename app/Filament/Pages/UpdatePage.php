@@ -43,11 +43,16 @@ class UpdatePage extends Page
      */
     public function getGitCommits(): string
     {
-        // Tentukan perintah berdasarkan OS
-        $command = PHP_OS_FAMILY === 'Windows'
-            ? 'cmd /c git log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5'
-            : 'git log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5';
+        // Deteksi OS
+        $isWindows = PHP_OS_FAMILY === 'Windows';
+        $git = $isWindows ? '"C:\\Program Files\\Git\\cmd\\git.exe"' : 'git';
 
+        // Tentukan perintah Git berdasarkan OS
+        $command = $isWindows
+            ? 'cmd /c ' . $git . ' log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5'
+            : $git . ' log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5';
+
+        // Jalankan perintah untuk mendapatkan commit history
         $process = proc_open($command, [
             1 => ['pipe', 'w'], // STDOUT
             2 => ['pipe', 'w'], // STDERR
@@ -67,7 +72,7 @@ class UpdatePage extends Page
 
         return $gitCommits;
     }
-    
+
     /**
      * Jalankan update aplikasi dengan output live.
      */
