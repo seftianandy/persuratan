@@ -75,10 +75,7 @@ class UpdatePage extends Page
         // Jalankan perintah artisan secara langsung
         Artisan::call('migrate --force');
         Artisan::call('filament:optimize-clear');
-        Artisan::call('optimize:clear');
         Artisan::call('filament:optimize');
-        Artisan::call('config:cache');
-        Artisan::call('route:cache');
 
         // Kirim notifikasi sukses
         Notification::make()
