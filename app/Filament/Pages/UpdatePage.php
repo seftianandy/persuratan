@@ -86,10 +86,10 @@ class UpdatePage extends Page
         $this->updateLog .= nl2br(Artisan::output());
 
         // Kirim notifikasi sukses
-        Notification::make()
-            ->title("Update Aplikasi Berhasil")
-            ->body("Proses update selesai.")
-            ->success()
-            ->send();
+        // Notification::make()
+        //     ->title("Update Aplikasi Berhasil")
+        //     ->body("Proses update selesai.")
+        //     ->success()
+        //     ->send();
     }
 }

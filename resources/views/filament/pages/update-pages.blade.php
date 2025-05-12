@@ -17,11 +17,11 @@
             <pre>{{ $updateLog }}</pre>
         </div>
 
-        @if (session()->has('success'))
+        {{-- @if (session()->has('success'))
             <div class="mt-4 text-green-600">
                 {{ session('success') }}
             </div>
-        @endif
+        @endif --}}
     </div>
 
     <div class="p-6 bg-white shadow rounded-xl dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
