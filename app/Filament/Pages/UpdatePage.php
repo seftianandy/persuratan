@@ -64,7 +64,7 @@ class UpdatePage extends Page
 
         if (is_resource($process)) {
             while (!feof($pipes[1])) {
-                $this->updateLog .= fgets($pipes[1]) . "<br>"; // Menyimpan hasil output ke variabel
+                $this->updateLog .= nl2br(trim(fgets($pipes[1]))) . "\n"; // Menyimpan hasil output ke variabel
                 $this->dispatch('updateLogUpdated'); // Memicu event Livewire agar UI diperbarui secara real-time
                 usleep(500000); // Tunggu sebentar agar tampilan tidak terlalu cepat
             }

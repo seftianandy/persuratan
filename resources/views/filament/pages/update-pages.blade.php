@@ -14,7 +14,7 @@
         </x-filament::button>
         <div class="mt-6 p-4 text-white text-sm font-mono rounded-lg overflow-auto max-h-64" style="background-color: rgb(50, 50, 50)" wire:poll.500ms="$refresh">
             <div class="text-gray-300 font-bold mb-2">Log Update:</div>
-            <pre>{{ $updateLog }}</pre>
+            <pre class="whitespace-pre-wrap">{{ $updateLog }}</pre>
         </div>
 
         {{-- @if (session()->has('success'))
