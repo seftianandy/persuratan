@@ -39,12 +39,39 @@ class UpdatePage extends Page
     }
 
     /**
+     * Ambil commit history dari Git.
+     */
+    public function getGitCommits(): string
+    {
+        $command = 'git log --pretty=format:"%h - %s (%ci)" --abbrev-commit -n 5';
+
+        $process = proc_open($command, [
+            1 => ['pipe', 'w'], // STDOUT
+            2 => ['pipe', 'w'], // STDERR
+        ], $pipes);
+
+        $gitCommits = "";
+
+        if (is_resource($process)) {
+            while (!feof($pipes[1])) {
+                $gitCommits .= fgets($pipes[1]) . "\n";
+            }
+
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            proc_close($process);
+        }
+
+        return $gitCommits;
+    }
+
+    /**
      * Jalankan update aplikasi dengan output live.
      */
     #[On('runUpdateApp')]
     public function runUpdateApp()
     {
-        $this->updateLog = ""; // Kosongkan log sebelum update dimulai
+        $this->updateLog = "Menjalankan pembaruan...\n"; // Kosongkan log sebelum update dimulai
 
         // Deteksi OS
         $isWindows = $this->osName === 'Windows';
@@ -73,6 +100,8 @@ class UpdatePage extends Page
             fclose($pipes[2]);
             proc_close($process);
         }
+
+        $this->updateLog .= "\nCommit History:\n" . $this->getGitCommits() . "\n";
 
         // Jalankan perintah artisan secara langsung
         Artisan::call('migrate');
