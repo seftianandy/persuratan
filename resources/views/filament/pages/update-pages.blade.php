@@ -3,12 +3,18 @@
 <div class="space-y-6">
     <div class="p-4 bg-white shadow rounded-lg dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
         <h2 class="text-lg font-bold mb-2">Update Aplikasi</h2>
+        <div class="text-gray-700 text-sm mb-4">
+            <strong>Sistem Operasi:</strong> {{ $osName }}
+        </div>
         <p>Versi aplikasi terbaru atau perbaikan bug akan diperbaharui. Untuk melakukan update aplikasi silahkan konfirmasi terlebih dahulu kepada developer.</p>
         <p>Tekan tombol di bawah untuk melakukan update aplikasi, dan setelah berhasil update silahkan untuk merefresh halaman.</p>
         <br>
         <x-filament::button wire:click="runUpdateApp" class="mt-4 font-normal">
             Update Aplikasi
         </x-filament::button>
+        <div class="mt-6 p-4 bg-black text-white text-sm font-mono rounded-lg overflow-auto max-h-64">
+            <pre wire:poll.500ms="$refresh">{{ $updateLog }}</pre>
+        </div>
 
         @if (session()->has('success'))
             <div class="mt-4 text-green-600">
